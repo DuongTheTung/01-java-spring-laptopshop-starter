@@ -46,20 +46,14 @@
                                             <h3>Create a user</h3>
                                             <hr />
                                             <form:form method="post" action="/admin/user/create"
-                                                modelAttribute="newUser" class="row"
-                                                enctype="multipart/form-data">
+                                                modelAttribute="newUser" class="row">
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Email:</label>
-                                                    <form:input type="email" class="form-control is-invalid" path="email" />
-                                                    <form:errors path="email" cssClass="invalid-feedback, display = block"/>
+                                                    <form:input type="email" class="form-control" path="email" />
                                                 </div>
                                                 <div class="mb-3 col-12 col-md-6">
-                                                    <c:set var="errorPassword">
-                                                        <form:errors path="password" cssClass="invalid-feedback"/>
-                                                    </c:set>
                                                     <label class="form-label">Password:</label>
-                                                    <form:input type="password" class="form-control ${not empty errorPassword ? 'is-invalid' : ''}" path="password" />
-                                                    ${errorPassword}
+                                                    <form:input type="password" class="form-control" path="password" />
                                                 </div>
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Phone number:</label>
@@ -73,20 +67,18 @@
                                                     <label class="form-label">Address:</label>
                                                     <form:input type="text" class="form-control" path="address" />
                                                 </div>
-
+<!-- 
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label class="form-label">Role:</label>
                                                     <form:select class="form-select" path="role.name">
-                                                        <form:option value="ADMIN">ADMIN</form:option>
-                                                        <form:option value="USER">USER</form:option>
+                                                        <form:option value="ADMIN">ADMIN</option>
+                                                        <form:option value="USER">USER</option>
                                                     </form:select>
-                                                </div>
+                                                </div> -->
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <label for="avatarFile" class="form-label">Avatar:</label>
                                                     <input class="form-control" type="file" id="avatarFile"
-                                                        accept=".png, .jpg, .jpeg"
-                                                        name="hoidanitFile"
-                                                        />
+                                                        accept=".png, .jpg, .jpeg">
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <img style="max-height: 250px; display: none;" alt="avatar preview"

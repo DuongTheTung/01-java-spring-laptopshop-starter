@@ -19,32 +19,32 @@
             <jsp:include page="../layout/sidebar.jsp"></jsp:include>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="row">
-                        <div class="col-md-6 col-12 mx-auto">
-                            <h3>Delete user</h3>
-                            <hr />
-                            <div class="col-12 mx-auto">
-                                <div class="d-flex justify-content-between">
-                                  <h3>Xóa người dùng có ID: ${id}</h3>
-                                </div>
-                              
-                                <hr>
-                              
-                                <div class="alert alert-danger">
-                                  Bạn có chắc chắn muốn xóa người dùng này không?
-                                </div>
-                              
-                                <form:form method="post" action="/admin/user/delete/${id}" modelAttribute="newUser">
-                                    <div class="mb-3" >
-                                        <label class="form-label">id:</label>
-                                        <form:input value="${id}" type="text" class="form-control" path="id" />
-                                    </div>
-                                <button class="btn btn-danger">Xác nhận</button>
-                                </form:form>
+                    <div class="container-fluid px-4">
+                      <div class="row">
+                        <div class="col-12 mx-auto">
+                          <div class="d-flex justify-content-between">
+                            <h3>Chi tiết người dùng với id = ${id}</h3>
+      
+                          </div>
+                          <hr/>
+                  
+      
+                          <div class="card" style="width: 60%">
+                              <div class="card-header">
+                                Thông tin người dùng
                               </div>
+                              <ul class="list-group list-group-flush">
+                                <li class="list-group-item">ID: ${id}</li>
+                                <li class="list-group-item">Email ${user.email}</li>
+                                <li class="list-group-item">Tên đầy đủ ${user.fullName}</li>
+                                <li class="list-group-item">Địa chỉ ${user.address}</li>
+                              </ul>
+                            </div>
+                            <a href="/admin/user" class="btn btn-success mt-3">Trở lại</a>
                         </div>
-    
-                    </div>    
+                      </div>
+      
+                    </div>                    
                 </main>
                 <jsp:include page="../layout/footer.jsp"></jsp:include>
             </div>

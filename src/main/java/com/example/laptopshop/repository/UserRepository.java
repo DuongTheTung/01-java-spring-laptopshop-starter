@@ -10,7 +10,9 @@ import com.example.laptopshop.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User save(User user);
+    User save(User hoidanit); // == UPDATE/ INSERT
+
+    void deleteById(long id); // đây là phương thức , khi gọi sẽ tự động tạo truy vấn sql
 
     List<User> findOneByEmail(String email);
 
@@ -18,5 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findById(long id);
 
-    User deleteById(long id);
+    boolean existsByEmail(String email);
+
+    User findByEmail(String email);
 }

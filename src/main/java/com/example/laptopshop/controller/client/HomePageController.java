@@ -1,0 +1,48 @@
+package com.example.laptopshop.controller.client;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.example.laptopshop.domain.User;
+import com.example.laptopshop.domain.dto.RegisterDTO;
+import com.example.laptopshop.service.UserService;
+
+@Controller
+public class HomePageController {
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+
+    public HomePageController(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @GetMapping("/register")
+    public String getRegisterPage(Model model) {
+        model.addAttribute("registerUser", new RegisterDTO());
+        return "client/auth/register";
+    }
+
+    @PostMapping("/register")
+    public String handelRegisterPage(@ModelAttribute("registerUser") RegisterDTO registerDTO) {
+        User user = this.userService.registerDTOtoUser(registerDTO);
+        String hashPassword = this.passwordEncoder.encode(user.getPassword());
+
+        user.setPassword(hashPassword);
+        user.setRole(this.userService.getRoleByName("User"));
+        this.userService.handleSaveUser(user);
+        return "redirect:/login";
+    }
+
+    @GetMapping("/login")
+    public String getLoginPage(Model model) {
+        model.addAttribute("registerUser", new RegisterDTO());
+        return "client/auth/login";
+    }
+}
