@@ -1,7 +1,23 @@
 package com.example.laptopshop.domain.dto;
 
+import com.example.laptopshop.service.validator.RegisterChecked;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+
+@RegisterChecked
 public class RegisterDTO {
-    private String firstName, lastName, email, password, confirmPassword;
+    @Size(min = 3, message = "first name phải có tối hiểu 3 ký tự")
+    private String firstName;
+
+    private String lastName;
+    @Email(message = "Email ko hop le", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    private String email;
+
+    private String password;
+
+    @Size(min = 3, message = "confirmpassword phải có tối iểu 3 ký tự")
+    private String confirmPassword;
 
     public String getFirstName() {
         return firstName;

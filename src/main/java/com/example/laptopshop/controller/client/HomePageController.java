@@ -2,6 +2,7 @@ package com.example.laptopshop.controller.client;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.example.laptopshop.domain.User;
 import com.example.laptopshop.domain.dto.RegisterDTO;
 import com.example.laptopshop.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class HomePageController {
@@ -30,7 +33,12 @@ public class HomePageController {
     }
 
     @PostMapping("/register")
-    public String handelRegisterPage(@ModelAttribute("registerUser") RegisterDTO registerDTO) {
+    public String handelRegisterPage(@ModelAttribute("registerUser") @Valid RegisterDTO registerDTO,
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "client/auth/register";
+        }
+
         User user = this.userService.registerDTOtoUser(registerDTO);
         String hashPassword = this.passwordEncoder.encode(user.getPassword());
 
