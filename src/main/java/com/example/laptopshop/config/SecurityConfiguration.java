@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
+// import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import com.example.laptopshop.service.CustomUserDetailsService;
 import com.example.laptopshop.service.UserService;
@@ -46,10 +46,10 @@ public class SecurityConfiguration {
         return authProvider;
     }
 
-    // @Bean
-    // public AuthenticationSuccessHandler customSuccessHandler() {
-    // return new CustomSuccessHandler();
-    // }
+    @Bean
+    public AuthenticationSuccessHandler customSuccessHandler() {
+        return new CustomSuccessHandler();
+    }
 
     // @Bean
     // public SpringSessionRememberMeServices rememberMeServices() {
@@ -99,5 +99,29 @@ public class SecurityConfiguration {
 
     // return http.build();
     // }
+
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD,
+                                DispatcherType.INCLUDE)
+                        .permitAll()
+                        .requestMatchers("/", "/login", "/client/**", "/css/**", "/js/**",
+                                "/images/**")
+                        .permitAll()
+
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        .anyRequest().authenticated())
+
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .successHandler(customSuccessHandler())
+                        .failureUrl("/login?error")
+                        .permitAll());
+
+        return http.build();
+    }
 
 }
